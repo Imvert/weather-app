@@ -43,7 +43,7 @@ export default function WeatherApp() {
       ) : (
         badRequest != <Loading></Loading>
       )}
-      {weather == null ? (
+      {weather === null ? (
         <span style={{ color: "red", fontSize: "20px" }}>
           Ingrese una ciudad valida
         </span>
