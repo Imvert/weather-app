@@ -8,7 +8,7 @@ export const getCity = async (city) => {
     if (request.status === 200) {
       return request.json();
     } else if (request.status === 400) {
-      return console.log("error en la consulta");
+      return;
     }
   } catch (error) {
     console.error(error);

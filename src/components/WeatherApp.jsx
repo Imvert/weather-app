@@ -7,6 +7,7 @@ import Loading from "./Loading";
 
 export default function WeatherApp() {
   const [weather, setWeather] = useState(null);
+  const [badRequest, setBadRequest] = useState(false);
 
   useEffect(() => {
     loadInfo();
@@ -15,7 +16,12 @@ export default function WeatherApp() {
   async function loadInfo(city = "Quito") {
     try {
       const result = await getCity(city);
-      setWeather(result);
+      if (result === undefined) {
+        setBadRequest(true);
+      } else {
+        setBadRequest(false);
+        setWeather(result);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -32,8 +38,18 @@ export default function WeatherApp() {
         App climpático 🌦️
       </h1>
       <WeatherForm onChangeCity={handleChangeCity} />
-      {weather ? <WeatherMainInfo weather={weather} /> : <Loading></Loading>}
-      {weather == null ? <span>Ingrese una ciudad valida</span> : ` `}
+      {weather ? (
+        <WeatherMainInfo weather={weather} />
+      ) : (
+        badRequest != <Loading></Loading>
+      )}
+      {weather == null ? (
+        <span style={{ color: "red", fontSize: "20px" }}>
+          Ingrese una ciudad valida
+        </span>
+      ) : (
+        ` `
+      )}
     </div>
   );
 }
